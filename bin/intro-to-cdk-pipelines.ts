@@ -2,6 +2,7 @@
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import { MyApplicationStack } from '../lib/my-application-stack';
+import { MyApplicationPipelineStack } from '../lib/my-application-pipeline-stack';
 
 const app = new cdk.App();
 new MyApplicationStack(app, 'MyApplication', {
@@ -19,3 +20,5 @@ new MyApplicationStack(app, 'MyApplication', {
 
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 });
+
+new MyApplicationPipelineStack(app, 'MyApplication-Pipeline', {})
