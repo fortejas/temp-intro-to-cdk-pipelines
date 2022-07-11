@@ -1,6 +1,7 @@
 import { Stack, StackProps } from "aws-cdk-lib";
 import { CodePipeline, CodePipelineSource, ShellStep } from "aws-cdk-lib/pipelines";
 import { Construct } from "constructs";
+import { MyApplicationStage } from "./my-application-stack";
 
 
 export class MyApplicationPipelineStack extends Stack {
@@ -10,7 +11,7 @@ export class MyApplicationPipelineStack extends Stack {
         /**
          * Adding the pipeline to our source code.
          */
-        new CodePipeline(this, 'Pipeline', {
+        const pipeline = new CodePipeline(this, 'Pipeline', {
             pipelineName: 'MyApplicationPipeline',
             synth: new ShellStep('Synth', {
                 input: CodePipelineSource.connection('fortejas/intro-to-cdk-pipelines', 'main', {
@@ -23,5 +24,11 @@ export class MyApplicationPipelineStack extends Stack {
                 ]
             })
         })
+
+        /**
+         * Add the first Dev Stage
+         */
+
+        pipeline.addStage(new MyApplicationStage(this, 'Dev', {}))
     }
 }

@@ -1,8 +1,16 @@
-import { Stack, StackProps } from 'aws-cdk-lib';
+import { Stack, StackProps, Stage, StageProps } from 'aws-cdk-lib';
 import { Vpc } from 'aws-cdk-lib/aws-ec2';
 import { Cluster, ContainerImage } from 'aws-cdk-lib/aws-ecs';
 import { ApplicationLoadBalancedFargateService } from 'aws-cdk-lib/aws-ecs-patterns';
 import { Construct } from 'constructs';
+
+export class MyApplicationStage extends Stage {
+  constructor(scope: Construct, id: string, props?: StageProps) {
+    super(scope, id, props)
+
+    new MyApplicationStack(this, 'MyApplication', {})
+  }
+}
 
 export class MyApplicationStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
