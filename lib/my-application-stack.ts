@@ -4,16 +4,24 @@ import { Cluster, ContainerImage } from 'aws-cdk-lib/aws-ecs';
 import { ApplicationLoadBalancedFargateService } from 'aws-cdk-lib/aws-ecs-patterns';
 import { Construct } from 'constructs';
 
+interface MyApplicationStageProps extends StageProps {
+  name: string
+}
+
+interface MyApplicationStackProps extends StackProps {
+  name: string
+}
+
 export class MyApplicationStage extends Stage {
-  constructor(scope: Construct, id: string, props?: StageProps) {
+  constructor(scope: Construct, id: string, props: MyApplicationStageProps) {
     super(scope, id, props)
 
-    new MyApplicationStack(this, 'MyApplication', {})
+    new MyApplicationStack(this, 'MyApplication', { name: props.name })
   }
 }
 
 export class MyApplicationStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
+  constructor(scope: Construct, id: string, props: MyApplicationStackProps) {
     super(scope, id, props);
 
     /**
@@ -24,7 +32,7 @@ export class MyApplicationStack extends Stack {
     const vpc = new Vpc(this, 'Vpc', { maxAzs: 3 })
 
     // Define the ECS cluster where we can place services
-    const cluster = new Cluster(this, 'Cluster', { vpc })
+    const cluster = new Cluster(this, 'Cluster', { vpc, clusterName: props?.name })
 
     // Define our service
     new ApplicationLoadBalancedFargateService(this, 'Service', {

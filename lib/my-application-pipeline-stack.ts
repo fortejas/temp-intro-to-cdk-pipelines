@@ -29,6 +29,12 @@ export class MyApplicationPipelineStack extends Stack {
          * Add the first Dev Stage
          */
 
-        pipeline.addStage(new MyApplicationStage(this, 'Dev', {}))
+        pipeline.addStage(new MyApplicationStage(this, 'Dev', { name: 'Develop' }))
+
+        /**
+         * Add Production Stage
+         */
+
+        pipeline.addStage(new MyApplicationStage(this, 'Prod', { name: 'Prod' }))
     }
 }

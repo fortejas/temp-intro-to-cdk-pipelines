@@ -19,6 +19,7 @@ new MyApplicationStack(app, 'MyApplication', {
   // env: { account: '123456789012', region: 'us-east-1' },
 
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
+  name: 'MyApplication-ClusterEB0386A7-EHTwGjkRSt2w'
 });
 
 new MyApplicationPipelineStack(app, 'MyApplication-Pipeline', {})
