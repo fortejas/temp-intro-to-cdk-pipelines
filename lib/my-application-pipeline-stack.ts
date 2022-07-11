@@ -25,16 +25,33 @@ export class MyApplicationPipelineStack extends Stack {
             })
         })
 
+        const devStage = new MyApplicationStage(this, 'Dev', { name: 'Develop' })
+
         /**
          * Add the first Dev Stage
          */
 
-        pipeline.addStage(new MyApplicationStage(this, 'Dev', { name: 'Develop' }))
+        const dev = pipeline.addStage(devStage)
+
+        /**
+         * Add a test stage
+         */
+
+        dev.addPost(new ShellStep('SmokeTest', {
+            envFromCfnOutputs: {
+                URL: devStage.loadBalancerAddr
+            },
+            commands: [
+                'curl -Ssf $URL'
+            ]
+        }))
 
         /**
          * Add Production Stage
          */
 
         pipeline.addStage(new MyApplicationStage(this, 'Prod', { name: 'Prod' }))
+
+
     }
 }
