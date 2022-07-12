@@ -39,7 +39,7 @@ export class MyApplicationStack extends Stack {
      */
 
     // Define the VPC where my application will live
-    const vpc = new Vpc(this, 'Vpc', { maxAzs: 3 })
+    const vpc = new Vpc(this, 'Vpc', { maxAzs: 2 })
 
     // Define the ECS cluster where we can place services
     const cluster = new Cluster(this, 'Cluster', { vpc, clusterName: props?.name })
